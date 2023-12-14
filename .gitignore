@@ -1,0 +1,25 @@
+# Virtual environment
+.venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local development settings
+*.env
+
+# Database
+db.sqlite3
+
+# Local Django settings
+local_settings.py
+
+# Log files
+*.log
+
+# Temporary files
+*.swp
+*~
+
+.idea
