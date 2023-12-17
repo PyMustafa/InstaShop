@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # Third party apps
     # Local apps
     'accounts',
+    'category',
 ]
 
 MIDDLEWARE = [

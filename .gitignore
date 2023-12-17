@@ -23,3 +23,7 @@ local_settings.py
 *~
 
 .idea
+
+media/
+mediafiles/
+staticfiles/
