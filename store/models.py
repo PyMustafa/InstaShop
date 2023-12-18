@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -25,6 +26,9 @@ class Category(models.Model):
         verbose_name = "Category"
         verbose_name_plural = "Categories"
         ordering = ['-created_at']
+
+    def get_url(self):
+        return reverse('category-products', args=[self.slug])
 
     def save(self, *args, **kwargs):
         if not self.slug:
