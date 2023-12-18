@@ -6,7 +6,7 @@ from .models import Product, Category
 
 @admin.register(Category)
 class ModelNameAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'description', 'created_at', 'updated_at']
+    list_display = ['name', 'slug', 'created_at', 'updated_at']
     search_fields = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
 
