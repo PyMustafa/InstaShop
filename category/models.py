@@ -8,7 +8,7 @@ def category_image_path(instance, filename):
     return f"category/icons/{instance.name}/{filename}"
 
 
-class ProductCategory(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(max_length=255, blank=True)
@@ -18,8 +18,8 @@ class ProductCategory(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Product Category"
-        verbose_name_plural = "Product Categories"
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
