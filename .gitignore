@@ -22,8 +22,9 @@ local_settings.py
 *.swp
 *~
 
-.idea
+.idea/
 
 media/
 mediafiles/
 staticfiles/
+downloads/
