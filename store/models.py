@@ -57,6 +57,9 @@ class Product(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    def get_url(self):
+        return reverse('product-details', args=[self.category.slug, self.slug])
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
