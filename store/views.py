@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
 
 from store.models import Product, Category
 
@@ -40,3 +41,62 @@ def product_details(request, category_slug=None, product_slug=None):
         'product': product,
     }
     return render(request, 'store/product-details.html', context)
+
+
+def add_to_cart(request):
+    product_id = str(request.GET['id'])
+    cart_product = {product_id: {
+        'name': request.GET['name'],
+        'qty': request.GET['qty'],
+        'price': request.GET['price'],
+        'image': request.GET['img'],
+    }}
+
+    if 'cart_data_obj' in request.session:
+        if product_id in request.session['cart_data_obj']:
+            cart_data = request.session['cart_data_obj']
+            cart_data[product_id]['qty'] = int(cart_product[product_id]['qty'])
+            cart_data.update(cart_product)
+            request.session['cart_data_obj'] = cart_data
+        else:
+            cart_data = request.session['cart_data_obj']
+            cart_data.update(cart_product)
+            request.session['cart_data_obj'] = cart_data
+    else:
+        request.session['cart_data_obj'] = cart_product
+    return JsonResponse(
+        {"data": request.session['cart_data_obj'], "totalcartitems": len(request.session['cart_data_obj'])})
+
+
+def calc_cart_total_price(cart_data):
+    cart_total_amount = 0
+    for product_id, item in cart_data.items():
+        price = float(item['price'])
+        qty = int(item['qty'])
+        cart_total_amount += price * qty
+    return cart_total_amount
+
+
+def calc_tax(total):
+    tax = (2 * total) / 100
+    grand_total = total + tax
+    return tax, grand_total
+
+
+def cart_view(request):
+    if 'cart_data_obj' in request.session:
+        cart_data = request.session['cart_data_obj']
+        cart_total_amount = calc_cart_total_price(cart_data)
+
+        tax, grand_total = calc_tax(cart_total_amount)
+
+        context = {
+            'cart_data': cart_data,
+            'cart_total_amount': cart_total_amount,
+            'totalcartitems': len(cart_data),
+            'tax': tax,
+            'grand_total': grand_total,
+        }
+        print(f'context>>>>{context}')
+        return render(request, 'store/cart.html', context)
+    return redirect("home")

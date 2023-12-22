@@ -22,9 +22,14 @@
                             <h2 class="title">{{ product.name }}</h2>
 
                             <div class="mb-3">
-                                <var class="price h4">${{ product.price }}</var>
+                                <var class="price h4">$<span
+                                        class="product-price-{{ product.id }}">{{ product.price }}</span></var>
                             </div>
                             <p>{{ product.description }}</p>
+                            <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
+                            <input type="hidden" class="product-image-{{ product.id }}"
+                                   value="{{ product.image.url }}">
+                            <input type="hidden" class="product-name-{{ product.id }}" value="{{ product.name }}">
                             <hr>
                             <div class="row">
                                 <div class="item-option-select">
@@ -66,16 +71,32 @@
                             </div> <!-- row.// -->
                             <hr>
 
-                            {% if product.stock > 0 and product.stock <= 3 and product.is_available %}
-                                <span class="text-danger">Low stock: only {{ product.stock }} left</span>
-                                <br>
-                            {% endif %}
-
                             {% if product.stock <= 0 or not product.is_available %}
                                 <h5 class="btn btn-gray ">Out Of Stock</h5>
                             {% else %}
-                                <a href="" class="btn  btn-primary"> <span
-                                        class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i> </a>
+                                <!-- product quantity .// -->
+                                <input type="hidden" id="product-stock" value="{{ product.stock }}">
+                                <div class="input-group input-spinner mb-2">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-light" type="button" id="button-minus"><i
+                                                class="fa fa-minus"></i></button>
+                                    </div>
+                                    <input type="text" class="form-control product-quantity-{{ product.id }}" value="1"
+                                           id="product-quantity">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light" type="button" id="button-plus"><i
+                                                class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <br>
+                                {% if product.stock > 0 and product.stock <= 10 and product.is_available %}
+                                    <span class="text-danger ">Low stock: only <span>{{ product.stock }}</span> left</>
+                                    <br>
+                                {% endif %}
+                                <!-- Add to cart .// -->
+                                <button type="submit" class="btn  btn-primary add-to-cart-btn"
+                                        data-index="{{ product.id }}"> <span
+                                        class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i></button>
                             {% endif %}
                         </article> <!-- product-info-aside .// -->
                     </main> <!-- col.// -->

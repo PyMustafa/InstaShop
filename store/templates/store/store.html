@@ -130,16 +130,28 @@
                     <div class="row">
                         {% for product in products %}
                             <div class="col-md-4">
+                                <input type="hidden" class="product-quantity-{{ product.id }}" value="1">
+                                <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
+                                <input type="hidden" class="product-image-{{ product.id }}"
+                                       value="{{ product.image.url }}">
+                                <input type="hidden" class="product-name-{{ product.id }}" value="{{ product.name }}">
+
                                 <figure class="card card-product-grid">
-                                    <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.image.url }}"> </a>
+
+                                    <a href="{{ product.get_url }}" class="img-wrap"> <img
+                                            src="{{ product.image.url }}"> </a>
                                     <figcaption class="info-wrap">
                                         <div class="fix-height">
                                             <a href="{{ product.get_url }}" class="title">{{ product.name }}</a>
                                             <div class="price-wrap mt-2">
-                                                <span class="price">${{ product.price }}</span>
+                                                <span class="price">$<span
+                                                        class="product-price-{{ product.id }}">{{ product.price }}</span></span>
                                             </div> <!-- price-wrap.// -->
                                         </div>
-                                        <a href="#" class="btn btn-block btn-primary">Add to cart </a>
+                                        <button type="submit" data-index="{{ product.id }}"
+                                                class="btn btn-block  btn-primary add-to-cart-btn"> <span
+                                                class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>
+                                        </button>
                                     </figcaption>
                                 </figure>
                             </div> <!-- col.// -->

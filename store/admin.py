@@ -15,3 +15,4 @@ class ModelNameAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name', 'slug']
     prepopulated_fields = {'slug': ('name',)}
+    list_display = ['name', 'stock', 'created_at', 'updated_at']
