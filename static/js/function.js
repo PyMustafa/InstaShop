@@ -22,6 +22,7 @@ $minusBtn.click(function () {
 });
 
 
+//############## add to cart functionality ##############//
 $(".add-to-cart-btn").on("click", function () {
 
     let this_val = $(this)
@@ -61,3 +62,50 @@ $(".add-to-cart-btn").on("click", function () {
         }
     })
 })
+
+
+//############## Update Cart item Quantity ##############//
+function updateCartItemQuantity(indexVal, currentVal) {
+    $.ajax({
+        url: '/store/update-cart-item-qty',
+        data: {
+            'id': indexVal,
+            'qty': currentVal,
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log('Updated Cart item quantity');
+        },
+        error: function (error) {
+            console.error('Error updating cart item quantity:', error);
+        }
+    });
+}
+$(".button-plus").on("click", function () {
+    let thisButton = $(this);
+    let indexVal = thisButton.attr('itemid');
+    let productQuantity = $(".product-quantity-" + indexVal);
+    let productQuantityVal = productQuantity.val()
+    let currentVal = parseInt(productQuantityVal);
+
+    if (!isNaN(currentVal) && currentVal < 10) {
+        currentVal++;
+    }
+    productQuantity.val(currentVal);
+    updateCartItemQuantity(indexVal, currentVal)
+});
+
+$(".button-minus").on("click", function () {
+    let thisButton = $(this);
+    let indexVal = thisButton.attr('itemid');
+    let productQuantityInput = $(".product-quantity-" + indexVal);
+
+    let currentVal = parseInt(productQuantityInput.val());
+
+    if (!isNaN(currentVal) && currentVal > 1) {
+        currentVal--;
+    }
+    productQuantityInput.val(currentVal);
+    updateCartItemQuantity(indexVal, currentVal)
+});
+

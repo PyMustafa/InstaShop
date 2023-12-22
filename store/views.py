@@ -86,6 +86,7 @@ def calc_tax(total):
 def cart_view(request):
     if 'cart_data_obj' in request.session:
         cart_data = request.session['cart_data_obj']
+        print()
         cart_total_amount = calc_cart_total_price(cart_data)
 
         tax, grand_total = calc_tax(cart_total_amount)
@@ -98,5 +99,26 @@ def cart_view(request):
             'grand_total': grand_total,
         }
         print(f'context>>>>{context}')
-        return render(request, 'store/cart.html', context)
-    return redirect("home")
+    return render(request, 'store/cart.html', context)
+
+
+def delete_cart_item(request):
+    product_id = request.GET.get('pid')
+
+    # Check if the key exists before deleting
+    if 'cart_data_obj' in request.session:
+        cart_data_obj = request.session['cart_data_obj']
+        if product_id in cart_data_obj:
+            del cart_data_obj[product_id]
+            request.session['cart_data_obj'] = cart_data_obj
+
+    return redirect('cart')
+
+
+def update_cart_item_qty(request):
+    product_id = str(request.GET['id'])
+    product_qty = str(request.GET['qty'])
+    cart_data = request.session['cart_data_obj']
+    cart_data[product_id]['qty'] = product_qty
+    request.session['cart_data_obj'] = cart_data
+    return JsonResponse({"data": request.session['cart_data_obj']})

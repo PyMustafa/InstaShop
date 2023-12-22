@@ -1413,3 +1413,13 @@ a[class*=card]:hover .title {
 }
 
 /*# sourceMappingURL=ui.css.map */
+
+.empty {
+    text-align: center;
+}
+.empty__big {
+    display: block;
+    margin: auto;
+}
+
+
