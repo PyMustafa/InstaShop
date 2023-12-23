@@ -82,6 +82,7 @@ To get InstaShop running on your local machine, follow these steps:
 Navigate to http://localhost:8000/admin/
 ## 🔗 Links
 check me on
+
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mustafaahassan/)
 
 
