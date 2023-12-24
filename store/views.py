@@ -1,6 +1,7 @@
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-
+from django.core.paginator import Paginator
 from store.models import Product, Category
 
 
@@ -23,10 +24,14 @@ def store(request, category_slug=None):
         products = Product.objects.filter(category=category, is_available=True)
     else:
         products = Product.objects.all().filter(is_available=True)
-
     product_count = products.count()
+
+    paginator = Paginator(products, 6)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+
     context = {
-        'products': products,
+        'products': paged_products,
         'product_count': product_count,
     }
     return render(request, 'store/store.html', context)
@@ -122,3 +127,22 @@ def update_cart_item_qty(request):
     cart_data[product_id]['qty'] = product_qty
     request.session['cart_data_obj'] = cart_data
     return JsonResponse({"data": request.session['cart_data_obj']})
+
+
+def search_view(request):
+    products = None
+    product_count = 0
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        if keyword:
+            products = Product.objects.filter(Q(description__icontains=keyword) | Q(name__icontains=keyword))
+            product_count = products.count()
+
+            context = {
+                'products': products,
+                'product_count': product_count,
+
+            }
+
+            return render(request, 'store/store.html', context)
+    return redirect('store')
