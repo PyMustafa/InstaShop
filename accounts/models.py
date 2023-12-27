@@ -7,7 +7,7 @@ from django.db import models
 # Create your models here.
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, first_name, last_name, email, password=None):
+    def create_user(self, username, first_name, last_name, email, phone_number=None, password=None):
         if not email:
             raise ValueError('User must have an email address!')
 
@@ -19,8 +19,10 @@ class UserManager(BaseUserManager):
             username=username,
             first_name=first_name,
             last_name=last_name,
+            phone_number=phone_number
         )
         user.set_password(password)
+        user.is_active = False
         user.save()
         return user
 
@@ -43,7 +45,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     email = models.EmailField(max_length=100, unique=True, null=False, blank=False, validators=[validate_email], db_index=True)
-    phone_number = models.CharField(max_length=20, unique=True)
+    phone_number = models.CharField(max_length=20, unique=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']

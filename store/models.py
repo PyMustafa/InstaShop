@@ -46,7 +46,7 @@ class Product(models.Model):
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-    price = models.IntegerField()
+    price = models.FloatField()
     stock = models.IntegerField(default=1)
     image = models.ImageField(upload_to=product_image_path, blank=True)
 

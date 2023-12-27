@@ -89,6 +89,7 @@ def calc_tax(total):
 
 
 def cart_view(request):
+    context = {}
     if 'cart_data_obj' in request.session:
         cart_data = request.session['cart_data_obj']
         print()
