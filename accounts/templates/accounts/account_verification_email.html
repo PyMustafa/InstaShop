@@ -1,0 +1,21 @@
+{% autoescape off %}
+<div class="container" style="padding: 15px;">
+    <h2 class="bg-primary text-white p-2 rounded-top" style="margin: 0; padding: 10px;">Verify Email</h2>
+    <div class="bg-white p-3" style="margin: 0; padding: 15px;">
+        <p>Hi {{ user.first_name }},</p>
+        <p>You created an account on InstaShop.com, you need to verify your email. Please click on the button below to verify your email.</p>
+        <a href="{{ request.scheme }}://{{ domain }}{% url 'verify-email-confirm' uidb64=uid token=token %}" class="btn btn-primary" style="border-radius: 5px; font-weight: bold; text-decoration: none;">
+            Verify Email
+        </a>
+        <p style="margin-top: 40px;">Or you can copy the link below to your browser</p>
+        <p>{{ request.scheme }}://{{ domain }}{% url 'verify-email-confirm' uidb64=uid token=token %}</p>
+        <p>If you think it's not you, please ignore this email.</p>
+
+    </div>
+    <p>Insta Shop</p>
+    <div class="text-center mt-4">
+        <p>© {% now 'Y' %} <a href="">InstaShop</a></p>
+        <p>Follow us on <a href="https://twitter.com/">Twitter</a></p>
+    </div>
+</div>
+{% endautoescape %}

@@ -22,7 +22,6 @@ class UserManager(BaseUserManager):
             phone_number=phone_number
         )
         user.set_password(password)
-        user.is_active = False
         user.save()
         return user
 
@@ -39,6 +38,7 @@ class UserManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
+        user.email_is_verified = True
         user.save()
         return user
 
@@ -46,6 +46,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     email = models.EmailField(max_length=100, unique=True, null=False, blank=False, validators=[validate_email], db_index=True)
     phone_number = models.CharField(max_length=20, unique=True, null=True)
+    email_is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
