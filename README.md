@@ -77,9 +77,9 @@ To get InstaShop running on your local machine, follow these steps:
    ```
    Start Server
    ```bash
-   python manage.py createsuperuser
+   python manage.py runserver
    ```
-Navigate to http://localhost:8000/admin/
+Navigate to http://localhost:8000/admin/ and start adding categories and some products
 ## 🔗 Links
 check me on
 
