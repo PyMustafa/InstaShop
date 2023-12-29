@@ -8,20 +8,9 @@
         {% include 'includes/alerts.html' %}
         <!-- ============================ COMPONENT LOGIN   ================================= -->
         {% if request.GET.command == 'verification' %}
-
             <div class="container mx-auto alert alert-info text-center" role="alert"
                  style="max-width: 520px; margin-top:100px;">
-                {{ message }}
-                you need to verify your email first. We have sent you a verification email to your email address
-                "{{ request.GET.email }}"
-                <br><br>
-                Already verified? <a href="{% url 'login' %}">Login</a>
-            </div>
-        {% elif request.GET.command == 'not-verified' %}
-            <div class="container mx-auto alert alert-info text-center" role="alert"
-                 style="max-width: 520px; margin-top:100px;">
-                {{ message }}
-                you need to verify your email first. We have sent you a verification email to your email address
+                you need to verify your email. We have sent you a verification email to your email address
                 "{{ request.GET.email }}"
                 <br><br>
                 Already verified? <a href="{% url 'login' %}">Login</a>
@@ -41,7 +30,7 @@
                         </div> <!-- form-group// -->
 
                         <div class="form-group">
-                            <a href="#" class="float-right">Forgot password?</a>
+                            <a href="{% url 'forget-password' %}" class="float-right">Forgot password?</a>
 
                         </div> <!-- form-group form-check .// -->
                         <div class="form-group">
