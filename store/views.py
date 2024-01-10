@@ -92,7 +92,7 @@ def cart_view(request):
     context = {}
     if 'cart_data_obj' in request.session:
         cart_data = request.session['cart_data_obj']
-        print()
+
         cart_total_amount = calc_cart_total_price(cart_data)
 
         tax, grand_total = calc_tax(cart_total_amount)
@@ -147,3 +147,23 @@ def search_view(request):
 
             return render(request, 'store/store.html', context)
     return redirect('store')
+
+
+def checkout(request):
+    context = {}
+    if 'cart_data_obj' in request.session:
+        cart_data = request.session['cart_data_obj']
+
+        cart_total_amount = calc_cart_total_price(cart_data)
+
+        tax, grand_total = calc_tax(cart_total_amount)
+
+        context = {
+            'cart_data': cart_data,
+            'cart_total_amount': cart_total_amount,
+            'totalcartitems': len(cart_data),
+            'tax': tax,
+            'grand_total': grand_total,
+        }
+        print(f'context>>>>{context}')
+    return render(request, 'store/checkout.html', context)
